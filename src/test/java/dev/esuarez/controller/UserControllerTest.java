@@ -1,4 +1,4 @@
-package dev.esuarez;
+package dev.esuarez.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.esuarez.model.User;
@@ -52,8 +52,8 @@ public class UserControllerTest {
     @Test
     public void find_allUsers_OK() throws Exception {
         List<User> users = Arrays.asList(
-                User.builder().id(1L).user("Erick").email("at@mail.com").email("password").build(),
-                User.builder().id(2L).user("Suarez").email("suarez@gmail.com").email("1234pass").build());
+                User.builder().id(1L).user("Erick").email("at@mail.com").password("password").build(),
+                User.builder().id(2L).user("Suarez").email("suarez@gmail.com").password("1234pass").build());
         when(mockUserService.getAllUsers()).thenReturn(users);
 
         mockMvc.perform(get("/api/users"))
@@ -74,20 +74,20 @@ public class UserControllerTest {
 
     @Test
     public void find_userById_OK() throws Exception {
-        mockMvc.perform(get("/api/users/2"))
+        mockMvc.perform(get("/api/users/1"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(2)))
-                .andExpect(jsonPath("$.user", is("erick")))
-                .andExpect(jsonPath("$.password", is("pass")))
-                .andExpect(jsonPath("$.email", is("email@gmail.com")));
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.user", is(nullValue())))
+                .andExpect(jsonPath("$.password", is("encrypt")))
+                .andExpect(jsonPath("$.email", is("email@com.mx")));
 
-        verify(mockUserService, times(1)).findUserById(2L);
+        verify(mockUserService, times(1)).findUserById(1L);
     }
 
     @Test
     public void find_userNotFound_404() throws Exception {
-        mockMvc.perform(get("/api/users/1")).andDo(print()).andExpect(status().isOk());
+        mockMvc.perform(get("/api/users/404")).andDo(print()).andExpect(status().isNotFound());
     }
 
     @Test
@@ -103,19 +103,20 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.status", is(400)))
                 .andExpect(jsonPath("$.errors").isArray())
                 .andExpect(jsonPath("$.errors", hasSize(2)))
-                .andExpect(jsonPath("$.errors", hasItem("Please provide a password.")))
+                .andExpect(jsonPath("$.errors", hasItem("You should provide a password.")))
                 .andExpect(jsonPath("$.errors", hasItem("Email must be a valid email address.")));
     }
 
     @Test
     public void save_user_OK() throws Exception {
-        User newUser = User.builder().id(2L).user("Suarez").email("suarez@gmail.com").email("1234pass").build();
+        User newUser = User.builder().id(2L).user("Suarez").email("suarez@gmail.com").password("1234pass").build();
 
         when(mockUserService.createUser(any(User.class))).thenReturn(newUser);
 
         mockMvc.perform(post("/api/users")
                 .content(om.writeValueAsString(newUser))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", is(2)))
                 .andExpect(jsonPath("$.user", is("Suarez")))
@@ -128,7 +129,7 @@ public class UserControllerTest {
     @Test
     public void update_user_OK() throws Exception {
 
-        User updateUser = User.builder().id(1L).user("Erick").email("at@mail.com").email("password").build();
+        User updateUser = User.builder().id(1L).user("Erick").email("at@mail.com").password("password").build();
 
         when(mockUserService.saveOrUpdateUser(any(User.class), any(Long.class))).thenReturn(updateUser);
 
@@ -138,9 +139,9 @@ public class UserControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
-                .andExpect(jsonPath("$.user", is("Suarez")))
-                .andExpect(jsonPath("$.password", is("1234pass")))
-                .andExpect(jsonPath("$.email", is("suarez@gmail.com")));
+                .andExpect(jsonPath("$.user", is("Erick")))
+                .andExpect(jsonPath("$.password", is("password")))
+                .andExpect(jsonPath("$.email", is("at@mail.com")));
     }
 
     @Test
@@ -179,6 +180,7 @@ public class UserControllerTest {
     public void delete_userNotFound() throws Exception {
 
         mockMvc.perform(delete("/api/users/404"))
+                .andDo(print())
                 .andExpect(status().isNotFound());
     }
 }

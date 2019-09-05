@@ -10,7 +10,7 @@ public class Configdb {
     @Bean
     public CommandLineRunner unitDataBase(){
         return args -> {
-            System.out.println("ok");
+            System.out.println("Starting Database...");
         };
 
     }

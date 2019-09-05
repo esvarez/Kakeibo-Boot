@@ -3,6 +3,7 @@ package dev.esuarez.controller;
 import dev.esuarez.model.User;
 import dev.esuarez.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ public class UserController {
         return userService.findUserById(id);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/users")
     User createUser(@Valid @RequestBody User user){
         return userService.createUser(user);
