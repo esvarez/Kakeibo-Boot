@@ -1,13 +1,18 @@
 package dev.esuarez.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Builder(toBuilder = true)
 @Data
@@ -24,13 +29,18 @@ public class User extends AuditModel {
     @Column(unique = true)
     private String user;
 
-    @NotNull
+    @NotNull(message = "You should provide an email")
     @Size(max = 100)
     @Column(unique = true)
     private String email;
 
-    @NotNull
+    @NotNull(message = "You should provide a password")
     @Size(max = 250)
     private String password;
-
+/*
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "user")
+    private Set<Account> accounts = new HashSet<>();
+*/
 }
