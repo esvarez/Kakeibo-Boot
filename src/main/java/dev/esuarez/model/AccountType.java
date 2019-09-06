@@ -29,11 +29,4 @@ public class AccountType extends AuditModel {
     private String name;
 
     private String description;
-
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "accountType")
-    @JsonIgnore
-    private Set<Account> accounts = new HashSet<>();
-
 }

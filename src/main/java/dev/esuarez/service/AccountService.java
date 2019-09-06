@@ -8,6 +8,7 @@ import dev.esuarez.repository.AccountRepository;
 import dev.esuarez.repository.AccountTypeRepository;
 import dev.esuarez.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,7 +40,6 @@ public class AccountService {
     }
 
     public Account createAccount(Long userId, Account account){
-        //System.out.println(account.toString());
         Long accountTypeId = account.getAccountType().getId();
         return userRepository.findById(userId)
                 .map(user -> {
@@ -63,6 +63,16 @@ public class AccountService {
                     account.setDescription(account.getDescription());
                     return accountRepository.save(account);
                 }).orElseThrow(() -> new AccountNotFoundException(accountId));
+    }
+
+    //Todo Patch account
+
+    public ResponseEntity<?> deleteAccount(Long id){
+        return accountRepository.findById(id)
+                .map(account -> {
+                    accountRepository.delete(account);
+                    return ResponseEntity.ok().build();
+                }).orElseThrow(() -> new AccountNotFoundException(id));
     }
 
 }
