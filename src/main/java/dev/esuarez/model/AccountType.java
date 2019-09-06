@@ -1,5 +1,6 @@
 package dev.esuarez.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -26,5 +29,11 @@ public class AccountType extends AuditModel {
     private String name;
 
     private String description;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "accountType")
+    @JsonIgnore
+    private Set<Account> accounts = new HashSet<>();
 
 }

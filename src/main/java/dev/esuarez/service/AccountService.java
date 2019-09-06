@@ -1,12 +1,13 @@
 package dev.esuarez.service;
 
 import dev.esuarez.error.account.AccountNotFoundException;
+import dev.esuarez.error.accounttype.AccounTypeNotFoundException;
 import dev.esuarez.error.user.UserNotFoundException;
 import dev.esuarez.model.Account;
 import dev.esuarez.repository.AccountRepository;
+import dev.esuarez.repository.AccountTypeRepository;
 import dev.esuarez.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,13 +21,16 @@ public class AccountService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AccountTypeRepository accountTypeRepository;
+
     public List<Account> getAllAccounts(){
         return accountRepository.findAll();
     }
 
     public List<Account> getAllAccountsByUserId(Long userId){
-        //return accountRepository.findByUserId(userId);
-        return accountRepository.findAll();
+        return accountRepository.findByUserId(userId);
+        //return accountRepository.findAll();
     }
 
     public Account findAccountById(Long id){
@@ -35,11 +39,16 @@ public class AccountService {
     }
 
     public Account createAccount(Long userId, Account account){
+        //System.out.println(account.toString());
+        Long accountTypeId = account.getAccountType().getId();
         return userRepository.findById(userId)
                 .map(user -> {
-                    account.setUser(user);
-                    //user.getAccounts().add(account);
-                    return accountRepository.save(account);
+                    return accountTypeRepository.findById(accountTypeId)
+                            .map(accountType -> {
+                                account.setUser(user);
+                                account.setAccountType(accountType);
+                                return accountRepository.save(account);
+                            }).orElseThrow(() -> new AccounTypeNotFoundException(accountTypeId));
                 }).orElseThrow(() -> new UserNotFoundException(userId));
     }
 

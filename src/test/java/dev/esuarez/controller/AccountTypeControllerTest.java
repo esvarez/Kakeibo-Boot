@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -82,7 +83,7 @@ public class AccountTypeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.name", is("Ahorros")))
-                .andExpect(jsonPath("$.description", is("Account To save money")));
+                .andExpect(jsonPath("$.description", is("Account to save money")));
         verify(mockAccountType, times(1)).findAccountTypeById(1L);
     }
 
@@ -98,7 +99,8 @@ public class AccountTypeControllerTest {
                 .andExpect(jsonPath("$.timestamp", is(notNullValue())))
                 .andExpect(jsonPath("$.status", is(400)))
                 .andExpect(jsonPath("$.errors").isArray())
-                .andExpect(jsonPath("$.errors", hasSize(2)));
+                .andExpect(jsonPath("$.errors", hasSize(1)))
+                .andExpect(jsonPath("$.errors", hasItem("Please provide a name")));
 
     }
 
@@ -108,7 +110,7 @@ public class AccountTypeControllerTest {
                 .name("Money")
                 .description("Account to track my spends").build();
 
-        //when(mockAccountType.createAccountType())
+        when(mockAccountType.createAccountType(any(AccountType.class))).thenReturn(accountType);
 
         mockMvc.perform(post("/api/account-types")
                 .content(om.writeValueAsString(accountType))
@@ -124,6 +126,8 @@ public class AccountTypeControllerTest {
     public void update_accountType_OK() throws Exception {
         AccountType accountType = AccountType.builder().id(1L).name("Name updated").build();
 
+        when(mockAccountType.saveOrUpdate(any(AccountType.class), any(Long.class))).thenReturn(accountType);
+
         mockMvc.perform(put("/api/account-types/1")
                 .content(om.writeValueAsString(accountType))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8))
@@ -131,6 +135,16 @@ public class AccountTypeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.name", is("Name updated")));
+    }
+
+    @Test
+    public void delete_accountType_OK() throws Exception{
+
+        //ResponseEntity<?> response = new ResponseEntity.
+
+        mockMvc.perform(delete("/api/account-types/1"))
+                .andExpect(status().isOk());
+
     }
 
 }

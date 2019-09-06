@@ -39,7 +39,7 @@ public class Account extends AuditModel {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "account_type_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private AccountType accountType;
 
 }

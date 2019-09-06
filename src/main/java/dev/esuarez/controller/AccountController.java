@@ -29,8 +29,7 @@ public class AccountController {
 
     @GetMapping("/users/{userId}/accounts")
     List<Account> getAllAccountsByUserId(@PathVariable (value = "userId") @Min(1) Long userId){
-        //return accountService.getAllAccountsByUserId(userId);
-        return accountService.getAllAccounts();
+        return accountService.getAllAccountsByUserId(userId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
