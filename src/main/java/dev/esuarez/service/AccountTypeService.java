@@ -1,6 +1,6 @@
 package dev.esuarez.service;
 
-import dev.esuarez.error.accounttype.AccounTypeNotFoundException;
+import dev.esuarez.error.accounttype.AccountTypeNotFoundException;
 import dev.esuarez.model.AccountType;
 import dev.esuarez.repository.AccountTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class AccountTypeService {
 
     public AccountType findAccountTypeById(Long id){
         return accountTypeRepository.findById(id)
-                .orElseThrow(() -> new AccounTypeNotFoundException(id));
+                .orElseThrow(() -> new AccountTypeNotFoundException(id));
     }
 
     public AccountType createAccountType(AccountType accountType){
@@ -49,6 +49,6 @@ public class AccountTypeService {
                 .map(accountType -> {
                     accountTypeRepository.delete(accountType);
                     return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new AccounTypeNotFoundException(id));
+                }).orElseThrow(() -> new AccountTypeNotFoundException(id));
     }
 }

@@ -1,7 +1,7 @@
 package dev.esuarez.service;
 
 import dev.esuarez.error.account.AccountNotFoundException;
-import dev.esuarez.error.accounttype.AccounTypeNotFoundException;
+import dev.esuarez.error.accounttype.AccountTypeNotFoundException;
 import dev.esuarez.error.user.UserNotFoundException;
 import dev.esuarez.model.Account;
 import dev.esuarez.repository.AccountRepository;
@@ -48,11 +48,11 @@ public class AccountService {
                                 account.setUser(user);
                                 account.setAccountType(accountType);
                                 return accountRepository.save(account);
-                            }).orElseThrow(() -> new AccounTypeNotFoundException(accountTypeId));
+                            }).orElseThrow(() -> new AccountTypeNotFoundException(accountTypeId));
                 }).orElseThrow(() -> new UserNotFoundException(userId));
     }
 
-    public Account updateAccount(Long userId, Long accountId, Account account){
+    public Account saveOrUpdateAccount(Long userId, Long accountId, Account account){
         if (!userRepository.existsById(userId)){
             throw new UserNotFoundException(userId);
         }
@@ -62,7 +62,10 @@ public class AccountService {
                     account.setName(account.getName());
                     account.setDescription(account.getDescription());
                     return accountRepository.save(account);
-                }).orElseThrow(() -> new AccountNotFoundException(accountId));
+                }).orElseGet(() -> {
+                    account.setId(accountId);
+                    return accountRepository.save(account);
+                });
     }
 
     //Todo Patch account

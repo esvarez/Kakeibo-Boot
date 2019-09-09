@@ -1,7 +1,7 @@
 package dev.esuarez.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import dev.esuarez.error.validator.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,44 +9,36 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
 
-@Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-@Entity
-@Table(name = "accounts")
-public class Account extends AuditModel {
+@Data
+@Table(name = "movement_categories")
+public class MovementCategory extends AuditModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Please provide a name.")
-    @Size(max = 75)
+    @Size(max = 120)
+    @NotNull(message = "Please provide a name for the category")
     private String name;
 
-    @Min(0)
-    private BigDecimal amount;
+    @Category
+    @NotNull(message = "Please provide a category")
+    private String category;
 
-    @Size(max = 250)
-    private String description;
+    @NotNull
+    private String image;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "account_type_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private AccountType accountType;
-
-
 }

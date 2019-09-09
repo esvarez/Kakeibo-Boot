@@ -12,40 +12,43 @@ import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Map;
 
+import static dev.esuarez.config.KakeiboUri.API;
+import static dev.esuarez.config.KakeiboUri.USERS_API;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping(API)
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping(USERS_API)
     List<User> getAllUsers(){
         return userService.getAllUsers();
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping(USERS_API + "/{id}")
     User getUser(@PathVariable @Min(1) Long id){
         return userService.findUserById(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/users")
+    @PostMapping(USERS_API)
     User createUser(@Valid @RequestBody User user){
         return userService.createUser(user);
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping(USERS_API + "/{id}")
     User updateUser(@Valid @RequestBody User user,@PathVariable @Min(1) Long id){
         return userService.saveOrUpdateUser(user, id);
     }
 
-    @PatchMapping("/users/{id}")
+    @PatchMapping(USERS_API + "/{id}")
     User patch(@RequestBody Map<String, String> user, @PathVariable @Min(1) Long id){
         return userService.patchUser(user, id);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping(USERS_API + "/{id}")
     ResponseEntity<?> deleteUser(@PathVariable @Min(1) Long id){
         return userService.deleteUser(id);
     }

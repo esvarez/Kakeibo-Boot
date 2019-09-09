@@ -1,5 +1,8 @@
 package dev.esuarez.error;
 
+import dev.esuarez.error.account.AccountNotFoundException;
+import dev.esuarez.error.accounttype.AccountTypeNotFoundException;
+import dev.esuarez.error.movementcategory.MovementCategoryNotFoundException;
 import dev.esuarez.error.user.UserNotFoundException;
 import dev.esuarez.error.user.UserUnsupportedFieldPatchException;
 import org.springframework.http.HttpHeaders;
@@ -44,7 +47,10 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler({
-            UserNotFoundException.class
+            UserNotFoundException.class,
+            AccountNotFoundException.class,
+            AccountTypeNotFoundException.class,
+            MovementCategoryNotFoundException.class
     })
     public ResponseEntity<CustomErrorResponse> customHandleNotFound(Exception ex, WebRequest request){
 
