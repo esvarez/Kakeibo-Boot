@@ -40,6 +40,8 @@ public class MovementController {
         return movementService.saveOrUpdateMovement(movement, id);
     }
 
+
+
     @DeleteMapping(MOVEMENT_API + "/{id}")
     ResponseEntity<?> deleteMovement(@PathVariable @Min(1) Long id){
         return movementService.deleteMovement(id);
