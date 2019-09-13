@@ -1,8 +1,10 @@
 package dev.esuarez.service;
 
 import dev.esuarez.error.movementcategory.MovementCategoryNotFoundException;
+import dev.esuarez.error.user.UserNotFoundException;
 import dev.esuarez.model.MovementCategory;
 import dev.esuarez.repository.MovementCategoryRepository;
+import dev.esuarez.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ public class MovementCategoryService {
     @Autowired
     private MovementCategoryRepository movementCategoryRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public List<MovementCategory> getAllMovementCategories(){
         return movementCategoryRepository.findAll();
     }
@@ -24,8 +29,15 @@ public class MovementCategoryService {
                 .orElseThrow(() -> new MovementCategoryNotFoundException(id));
     }
 
-    public MovementCategory createMovementCategory (MovementCategory movementCategory){
-        return movementCategoryRepository.save(movementCategory);
+    public MovementCategory createMovementCategory (Long userId, MovementCategory movementCategory){
+        System.out.println(movementCategory);
+
+        return userRepository.findById(userId)
+                .map( user -> {
+                    movementCategory.setUser(user);
+                    return movementCategoryRepository.save(movementCategory);
+                })
+                .orElseThrow(() -> new UserNotFoundException(userId));
     }
 
     public MovementCategory saveOrUpdate(MovementCategory movementCategory, Long id){

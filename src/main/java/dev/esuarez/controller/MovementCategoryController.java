@@ -11,8 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
 
-import static dev.esuarez.config.KakeiboUri.API;
-import static dev.esuarez.config.KakeiboUri.MOVEMENT_CATEGORIES_API;
+import static dev.esuarez.config.KakeiboUri.*;
 
 @RestController
 @RequestMapping(API)
@@ -26,15 +25,16 @@ public class MovementCategoryController {
         return movementCategoryService.getAllMovementCategories();
     }
 
-    @GetMapping(MOVEMENT_CATEGORIES_API + "{id}")
+    @GetMapping(MOVEMENT_CATEGORIES_API + "/{id}")
     MovementCategory getMovementCategoryById (@PathVariable @Min(1) Long id){
         return movementCategoryService.findMovementCategoriesById(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(MOVEMENT_CATEGORIES_API)
-    MovementCategory createMovementCategory(@Valid @RequestBody MovementCategory movementCategory){
-        return movementCategoryService.createMovementCategory(movementCategory);
+    @PostMapping(USERS_API + "/{userId}" + MOVEMENT_CATEGORIES_API)
+    MovementCategory createMovementCategory(@PathVariable (value = "userId") Long userId,
+                                            @Valid @RequestBody MovementCategory movementCategory){
+        return movementCategoryService.createMovementCategory(userId, movementCategory);
     }
 
     @PutMapping(MOVEMENT_CATEGORIES_API + "/{id}")

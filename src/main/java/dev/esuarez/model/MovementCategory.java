@@ -33,7 +33,7 @@ public class MovementCategory extends AuditModel {
     @NotNull(message = "Please provide a category")
     private String category;
 
-    @NotNull
+    @NotNull(message = "Please provide an image")
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
