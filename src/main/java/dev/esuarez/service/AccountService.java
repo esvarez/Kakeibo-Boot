@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -45,29 +46,35 @@ public class AccountService {
                 .map(user -> {
                     return accountTypeRepository.findById(accountTypeId)
                             .map(accountType -> {
+                                BigDecimal amount = account.getAmount();
+                                if (amount == null)
+                                    account.setAmount(BigDecimal.ZERO);
                                 account.setUser(user);
                                 account.setAccountType(accountType);
                                 return accountRepository.save(account);
                             }).orElseThrow(() -> new AccountTypeNotFoundException(accountTypeId));
                 }).orElseThrow(() -> new UserNotFoundException(userId));
     }
-
+/*
     public Account saveOrUpdateAccount(Long userId, Long accountId, Account account){
         if (!userRepository.existsById(userId)){
             throw new UserNotFoundException(userId);
         }
 
+
+        /*
         return accountRepository.findById(accountId)
                 .map( account1 -> {
-                    account.setName(account.getName());
-                    account.setDescription(account.getDescription());
-                    return accountRepository.save(account);
+                    account1.setName(account.getName());
+                    account1.setDescription(account.getDescription());
+                    return accountRepository.save(account1);
                 }).orElseGet(() -> {
                     account.setId(accountId);
                     return accountRepository.save(account);
                 });
-    }
 
+    }
+*/
     //Todo Patch account
 
     public ResponseEntity<?> deleteAccount(Long id){

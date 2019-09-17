@@ -10,6 +10,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
 
+import static dev.esuarez.config.KakeiboUri.*;
+
 @RestController
 @RequestMapping("/api")
 public class AccountController {
@@ -38,5 +40,12 @@ public class AccountController {
                           @Valid @RequestBody Account account){
         return accountService.createAccount(userId, account);
     }
+
+    @PutMapping("/users/{userId}/accounts")
+    Account saveOrUpdateAccunt(@PathVariable (value = "userId") Long userId,
+                          @Valid @RequestBody Account account){
+        return accountService.createAccount(userId, account);
+    }
+
 
 }
