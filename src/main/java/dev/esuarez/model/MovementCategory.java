@@ -24,7 +24,7 @@ public class MovementCategory extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+/*
     @Size(max = 120)
     @NotNull(message = "Please provide a name for the category")
     private String name;
@@ -41,4 +41,5 @@ public class MovementCategory extends AuditModel {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private User user;
+    */
 }
