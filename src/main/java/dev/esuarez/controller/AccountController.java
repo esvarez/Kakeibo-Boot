@@ -42,7 +42,7 @@ public class AccountController {
     }
 
     @PutMapping("/users/{userId}/accounts")
-    Account saveOrUpdateAccunt(@PathVariable (value = "userId") Long userId,
+    Account saveOrUpdateAccunt (@PathVariable (value = "userId") Long userId,
                           @Valid @RequestBody Account account){
         return accountService.createAccount(userId, account);
     }

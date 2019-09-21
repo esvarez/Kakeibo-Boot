@@ -28,13 +28,17 @@ public class Movement extends AuditModel{
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "from", nullable = false)
+    @JoinColumn(name = "from_account", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Account from;
+    private Account fromAccount;
 
-    private Account to;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "to_account", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Account toAccount;
 
     @Positive
+    @NotNull(message = "You should provide an amount")
     private BigDecimal amount;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

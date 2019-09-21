@@ -39,10 +39,4 @@ public class User extends AuditModel {
     @NotNull(message = "You should provide a password.")
     @Size(max = 250)
     private String password;
-/*
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "user")
-    private Set<Account> accounts = new HashSet<>();
-*/
 }

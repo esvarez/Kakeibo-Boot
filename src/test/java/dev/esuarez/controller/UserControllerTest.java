@@ -1,6 +1,7 @@
 package dev.esuarez.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.esuarez.model.MovementCategory;
 import dev.esuarez.model.User;
 import dev.esuarez.service.UserService;
 import org.junit.Before;
@@ -175,11 +176,12 @@ public class UserControllerTest {
         mockMvc.perform(delete("/api/users/1"))
                 .andExpect(status().isOk());
     }
-
+/*
     @Test
     public void delete_userNotFound() throws Exception {
         mockMvc.perform(delete("/api/users/404"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
+    */
 }

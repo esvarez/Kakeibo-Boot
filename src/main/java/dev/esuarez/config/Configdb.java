@@ -2,29 +2,45 @@ package dev.esuarez.config;
 
 import dev.esuarez.model.Account;
 import dev.esuarez.model.AccountType;
+import dev.esuarez.model.MovementCategory;
 import dev.esuarez.model.User;
 import dev.esuarez.service.AccountService;
 import dev.esuarez.service.AccountTypeService;
+import dev.esuarez.service.MovementCategoryService;
 import dev.esuarez.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class Configdb {
 
     @Bean
     public CommandLineRunner unitDataBase(UserService userService, AccountTypeService accountTypeService,
-                                          AccountService accountService){
+                                          AccountService accountService, MovementCategoryService movementCategoryService){
         return args -> {
             System.out.println("Starting Database...");
-            User user = User.builder().id(1L).email("email@mail.com").password("Password").user("user").build();
-            AccountType accountType = AccountType.builder().id(1L).name("savings").build();
-            Account account = Account.builder().name("Budget").user(user).accountType(accountType).build();
 
+            User user = User.builder().id(1L).email("email@mail.com").password("Password").user("user").build();
             userService.createUser(user);
+
+            AccountType accountType = AccountType.builder().id(1L).name("savings").build();
             accountTypeService.createAccountType(accountType);
+
+            MovementCategory movementCategory = MovementCategory.builder()
+                    .id(1L).name("Food")
+                    .category("Expense")
+                    .image("Valid url")
+                    .user(user).build();
+            movementCategoryService.createMovementCategory(user.getId(), movementCategory);
+
+
+            Account account = Account.builder().id(1L).name("Budget").user(user).accountType(accountType).build();
+            Account account2 = Account.builder().id(2L).name("Credit Bank").user(user).accountType(accountType).build();
             accountService.createAccount(user.getId(), account);
+            accountService.createAccount(user.getId(), account2);
 
             System.out.println("... Saved");
         };

@@ -47,7 +47,6 @@ public class MovementCategoryService {
                     category.setImage(movementCategory.getImage());
                     category.setName(movementCategory.getName());
                     category.setUser(movementCategory.getUser());
-
                     return movementCategoryRepository.save(movementCategory);
                 }).orElseGet(() ->{
                     movementCategory.setId(id);
