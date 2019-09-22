@@ -13,35 +13,35 @@ import java.util.List;
 import static dev.esuarez.config.KakeiboUri.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(API)
 public class AccountController {
 
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("/accounts")
+    @GetMapping(ACCOUNT_API)
     List<Account> getAllAccount(){
         return accountService.getAllAccounts();
     }
 
-    @GetMapping("/accounts/{id}")
+    @GetMapping(ACCOUNT_API + "/{id}")
     Account getAccount(@PathVariable @Min(1) Long id){
         return accountService.findAccountById(id);
     }
 
-    @GetMapping("/users/{userId}/accounts")
+    @GetMapping(USERS_API + "/{userId}" + ACCOUNT_API)
     List<Account> getAllAccountsByUserId(@PathVariable (value = "userId") @Min(1) Long userId){
         return accountService.getAllAccountsByUserId(userId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/users/{userId}/accounts")
+    @PostMapping(USERS_API + "/{userId}" + ACCOUNT_API)
     Account createAccount(@PathVariable (value = "userId") Long userId,
                           @Valid @RequestBody Account account){
         return accountService.createAccount(userId, account);
     }
 
-    @PutMapping("/users/{userId}/accounts")
+    @PutMapping(USERS_API + "/{userId}" + ACCOUNT_API)
     Account saveOrUpdateAccunt (@PathVariable (value = "userId") Long userId,
                           @Valid @RequestBody Account account){
         return accountService.createAccount(userId, account);

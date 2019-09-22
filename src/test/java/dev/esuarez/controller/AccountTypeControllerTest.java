@@ -1,8 +1,6 @@
 package dev.esuarez.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.esuarez.model.Account;
 import dev.esuarez.model.AccountType;
 import dev.esuarez.service.AccountTypeService;
 import org.junit.Before;
@@ -14,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Arrays;
 import java.util.List;
 
+import static dev.esuarez.config.KakeiboUri.*;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -62,7 +60,7 @@ public class AccountTypeControllerTest {
         );
         when(mockAccountType.getAllAccountTypes()).thenReturn(accountTypes);
 
-        mockMvc.perform(get("/api/account-types"))
+        mockMvc.perform(get(API + ACCOUNT_TYPE_API))
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -78,7 +76,7 @@ public class AccountTypeControllerTest {
 
     @Test
     public void find_accountTypeById_OK() throws Exception{
-        mockMvc.perform(get("/api/account-types/1"))
+        mockMvc.perform(get(API + ACCOUNT_TYPE_API + "/1"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
@@ -91,7 +89,7 @@ public class AccountTypeControllerTest {
     public void save_invalidAccountType_400() throws Exception {
         AccountType accountType = AccountType.builder().id(1L).description("Description x").build();
 
-        mockMvc.perform(post("/api/account-types")
+        mockMvc.perform(post(API + ACCOUNT_TYPE_API)
                 .content(om.writeValueAsString(accountType))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
@@ -112,7 +110,7 @@ public class AccountTypeControllerTest {
 
         when(mockAccountType.createAccountType(any(AccountType.class))).thenReturn(accountType);
 
-        mockMvc.perform(post("/api/account-types")
+        mockMvc.perform(post(API + ACCOUNT_TYPE_API)
                 .content(om.writeValueAsString(accountType))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8))
                 .andDo(print())
@@ -123,12 +121,29 @@ public class AccountTypeControllerTest {
     }
 
     @Test
+    public void save_invalidAccountType_name_400() throws Exception {
+        AccountType accountType = AccountType.builder()
+                .description("Account type without name").build();
+        when(mockAccountType.createAccountType(any(AccountType.class))).thenReturn(accountType);
+
+        mockMvc.perform(post(API + ACCOUNT_TYPE_API)
+                .content(om.writeValueAsString(accountType))
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.timestamp", is(notNullValue())))
+                .andExpect(jsonPath("$.status", is(400)))
+                .andExpect(jsonPath("$.errors").isArray())
+                .andExpect(jsonPath("$.errors", hasItem("Please provide a name")));
+    }
+
+    @Test
     public void update_accountType_OK() throws Exception {
         AccountType accountType = AccountType.builder().id(1L).name("Name updated").build();
 
         when(mockAccountType.saveOrUpdate(any(AccountType.class), any(Long.class))).thenReturn(accountType);
 
-        mockMvc.perform(put("/api/account-types/1")
+        mockMvc.perform(put(API + ACCOUNT_TYPE_API + "/1")
                 .content(om.writeValueAsString(accountType))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -142,7 +157,7 @@ public class AccountTypeControllerTest {
 
         //ResponseEntity<?> response = new ResponseEntity.
 
-        mockMvc.perform(delete("/api/account-types/1"))
+        mockMvc.perform(delete(API + ACCOUNT_TYPE_API + "/1"))
                 .andExpect(status().isOk());
 
     }

@@ -12,37 +12,39 @@ import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Map;
 
+import static dev.esuarez.config.KakeiboUri.*;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping(API)
 public class AccountTypeController {
 
     @Autowired
     private AccountTypeService accountTypeService;
 
-    @GetMapping("/account-types")
+    @GetMapping(ACCOUNT_TYPE_API)
     List<AccountType> getAllAccountTypes() {
         return accountTypeService.getAllAccountTypes();
     }
 
-    @GetMapping("/account-types/{id}")
+    @GetMapping(ACCOUNT_TYPE_API + "/{id}")
     AccountType getAccountType(@PathVariable @Min(1) Long id){
         return accountTypeService.findAccountTypeById(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/account-types")
+    @PostMapping(ACCOUNT_TYPE_API)
     AccountType createAccountType(@Valid @RequestBody AccountType accountType) {
         return accountTypeService.createAccountType(accountType);
     }
 
-    @PutMapping("/account-types/{id}")
+    @PutMapping(ACCOUNT_TYPE_API + "/{id}")
     AccountType saveOrUpdateAccountType(@Valid @RequestBody AccountType accountType, @PathVariable @Min(1) Long id){
         return accountTypeService.saveOrUpdate(accountType, id);
     }
 
     //ToDo Patch Method
 
-    @DeleteMapping("/account-types/{id}")
+    @DeleteMapping(ACCOUNT_TYPE_API + "/{id}")
     ResponseEntity<?> saveOrUpdate(@PathVariable @Min(1) Long id){
         return accountTypeService.deleteAccountType(id);
     }

@@ -22,7 +22,7 @@ public class Configdb {
                                           AccountService accountService, MovementCategoryService movementCategoryService){
         return args -> {
             System.out.println("Starting Database...");
-
+/*
             User user = User.builder().id(1L).email("email@mail.com").password("Password").user("user").build();
             userService.createUser(user);
 
@@ -41,7 +41,7 @@ public class Configdb {
             Account account2 = Account.builder().id(2L).name("Credit Bank").user(user).accountType(accountType).build();
             accountService.createAccount(user.getId(), account);
             accountService.createAccount(user.getId(), account2);
-
+*/
             System.out.println("... Saved");
         };
 
