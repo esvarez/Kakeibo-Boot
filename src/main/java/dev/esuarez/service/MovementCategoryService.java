@@ -44,7 +44,7 @@ public class MovementCategoryService {
         return movementCategoryRepository.findById(id)
                 .map( category -> {
                     category.setCategory(movementCategory.getCategory());
-                    category.setImage(movementCategory.getImage());
+                    category.setImageURL(movementCategory.getImageURL());
                     category.setName(movementCategory.getName());
                     category.setUser(movementCategory.getUser());
                     return movementCategoryRepository.save(movementCategory);

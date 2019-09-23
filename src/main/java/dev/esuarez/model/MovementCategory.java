@@ -21,6 +21,8 @@ import javax.validation.constraints.Size;
 @Table(name = "movement_categories")
 public class MovementCategory extends AuditModel {
 
+    //ToDo Refactorizar para optimizar los datos
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,7 +36,7 @@ public class MovementCategory extends AuditModel {
     private String category;
 
     @NotNull(message = "Please provide an image")
-    private String image;
+    private String imageURL;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
