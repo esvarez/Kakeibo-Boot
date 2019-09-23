@@ -33,4 +33,6 @@ public class User extends AuditModel {
     @NotNull(message = "You should provide a password.")
     @Size(max = 250)
     private String password;
+
+    private boolean active;
 }

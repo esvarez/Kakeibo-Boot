@@ -1,13 +1,7 @@
 package dev.esuarez.config;
 
-import dev.esuarez.model.Account;
-import dev.esuarez.model.AccountType;
-import dev.esuarez.model.MovementCategory;
-import dev.esuarez.model.User;
-import dev.esuarez.service.AccountService;
-import dev.esuarez.service.AccountTypeService;
-import dev.esuarez.service.MovementCategoryService;
-import dev.esuarez.service.UserService;
+import dev.esuarez.model.*;
+import dev.esuarez.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +13,12 @@ public class Configdb {
 
     @Bean
     public CommandLineRunner unitDataBase(UserService userService, AccountTypeService accountTypeService,
-                                          AccountService accountService, MovementCategoryService movementCategoryService){
+                                          AccountService accountService, MovementCategoryService movementCategoryService,
+                                          RollService rollService){
         return args -> {
             System.out.println("Starting Database...");
+
+
 /*
             User user = User.builder().id(1L).email("email@mail.com").password("Password").user("user").build();
             userService.createUser(user);

@@ -48,5 +48,6 @@ public class Account extends AuditModel {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private AccountType accountType;
 
+    private boolean visible;
 
 }

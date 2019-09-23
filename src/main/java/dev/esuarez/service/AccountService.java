@@ -47,6 +47,7 @@ public class AccountService {
                     return accountTypeRepository.findById(accountTypeId)
                             .map(accountType -> {
                                 BigDecimal amount = account.getAmount();
+
                                 if (amount == null)
                                     account.setAmount(BigDecimal.ZERO);
                                 account.setUser(user);
