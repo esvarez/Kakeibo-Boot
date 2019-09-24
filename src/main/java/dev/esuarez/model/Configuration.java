@@ -1,6 +1,7 @@
 package dev.esuarez.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder(toBuilder = true)
 @Table(name = "configurations")
 public class Configuration extends AuditModel {

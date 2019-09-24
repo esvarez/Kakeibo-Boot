@@ -4,7 +4,7 @@ public class KakeiboUri {
 
     public static final String API = "/api";
 
-    public static final String ROLL_API = "/roles";
+    public static final String ROLL_API = "/rolls";
 
     public static final String USERS_API = "/users";
 

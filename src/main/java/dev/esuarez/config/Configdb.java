@@ -18,6 +18,12 @@ public class Configdb {
         return args -> {
             System.out.println("Starting Database...");
 
+            Roll roll = Roll.builder().id(1).name("Admin").description("Description").build();
+            Roll roll2 = Roll.builder().id(2).name("User").description("Description").build();
+
+            rollService.createRoll(roll);
+            rollService.createRoll(roll2);
+
 
 /*
             User user = User.builder().id(1L).email("email@mail.com").password("Password").user("user").build();

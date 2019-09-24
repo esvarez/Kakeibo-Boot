@@ -3,6 +3,7 @@ package dev.esuarez.error;
 import dev.esuarez.error.Roll.RollNotFoundException;
 import dev.esuarez.error.account.AccountNotFoundException;
 import dev.esuarez.error.accounttype.AccountTypeNotFoundException;
+import dev.esuarez.error.budget.BudgetNotFoundException;
 import dev.esuarez.error.movementcategory.MovementCategoryNotFoundException;
 import dev.esuarez.error.user.UserNotFoundException;
 import dev.esuarez.error.user.UserUnsupportedFieldPatchException;
@@ -50,6 +51,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler({
             RollNotFoundException.class,
             UserNotFoundException.class,
+            BudgetNotFoundException.class,
             AccountNotFoundException.class,
             AccountTypeNotFoundException.class,
             MovementCategoryNotFoundException.class

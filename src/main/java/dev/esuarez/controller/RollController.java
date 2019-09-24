@@ -22,7 +22,7 @@ public class RollController {
 
     @GetMapping(ROLL_API)
     List<Roll> getAllRoles(){
-        return rollService.getAllRoles();
+        return rollService.getAllRolls();
     }
 
     @GetMapping(ROLL_API + "/{id}")
@@ -46,6 +46,7 @@ public class RollController {
 
     @DeleteMapping(ROLL_API + "/{id}")
     ResponseEntity<?> deleteRoll(@PathVariable @Min(1) Integer id){
-        return rollService.deletRoll(id);
+        return rollService.deleteRoll(id);
     }
+
 }

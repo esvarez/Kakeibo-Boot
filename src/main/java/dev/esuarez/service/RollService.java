@@ -15,7 +15,7 @@ public class RollService {
     @Autowired
     private RollRepository rollRepository;
 
-    public List<Roll> getAllRoles(){
+    public List<Roll> getAllRolls(){
         return rollRepository.findAll();
     }
 
@@ -31,8 +31,10 @@ public class RollService {
     public Roll saveOrUpdateRoll(Integer id, Roll rollRequest){
         return rollRepository.findById(id)
                 .map(roll -> {
+                    /*
                     roll.setName(rollRequest.getName());
                     roll.setDescription(rollRequest.getDescription());
+                    */
                     return rollRepository.save(roll);
                 })
                 .orElseThrow(() -> new RollNotFoundException(id));
@@ -40,7 +42,7 @@ public class RollService {
 
     // ToDo Patch
 
-    public ResponseEntity<?> deletRoll(Integer id){
+    public ResponseEntity<?> deleteRoll(Integer id){
         return rollRepository.findById(id)
                 .map(roll -> {
                     rollRepository.delete(roll);

@@ -36,19 +36,19 @@ public class MovementService {
     }
 
     public Movement createMovement (Movement movement){
-        Long categoryId = movement.getCategory().getId();
+        Long categoryId = movement.getCategoryId().getId();
 
-        Account account = accountRepository.findById(movement.getFromAccount().getId())
-                .orElseThrow(() -> new AccountNotFoundException(movement.getFromAccount().getId()));
+        Account account = accountRepository.findById(movement.getFromAccountId().getId())
+                .orElseThrow(() -> new AccountNotFoundException(movement.getFromAccountId().getId()));
 
-        Account toaccount = accountRepository.findById(movement.getToAccount().getId())
-                .orElseThrow(() -> new AccountNotFoundException(movement.getToAccount().getId()));
+        Account toaccount = accountRepository.findById(movement.getToAccountId().getId())
+                .orElseThrow(() -> new AccountNotFoundException(movement.getToAccountId().getId()));
 
         return movementCategoryRepository.findById(categoryId)
                 .map(category -> {
-                    movement.setCategory(category);
-                    movement.setFromAccount(account);
-                    movement.setToAccount(toaccount );
+                    movement.setCategoryId(category);
+                    movement.setFromAccountId(account);
+                    movement.setToAccountId(toaccount );
                     return movementRepository.save(movement);
                 }).orElseThrow(() -> new MovementCategoryNotFoundException(categoryId));
     }

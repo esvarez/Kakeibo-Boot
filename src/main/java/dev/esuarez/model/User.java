@@ -9,12 +9,15 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
-@Builder(toBuilder = true)
 @Data
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
+@Builder(toBuilder = true)
 public class User extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +36,17 @@ public class User extends AuditModel {
     @NotNull(message = "You should provide a password.")
     @Size(max = 250)
     private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            })
+    @JoinTable(name = "user_roles",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "roll_id") }
+    )
+    private Set<Roll> rolls = new HashSet<>();
 
     private boolean active;
 }

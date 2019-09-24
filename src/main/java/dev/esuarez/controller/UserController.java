@@ -1,5 +1,6 @@
 package dev.esuarez.controller;
 
+import dev.esuarez.facade.FacadeUser;
 import dev.esuarez.model.User;
 import dev.esuarez.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,13 @@ import static dev.esuarez.config.KakeiboUri.USERS_API;
 @RequestMapping(API)
 public class UserController {
 
+    private static final String REGISTER_PATH = "/register";
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FacadeUser facadeUser;
 
     @GetMapping(USERS_API)
     List<User> getAllUsers(){
@@ -51,6 +57,11 @@ public class UserController {
     @DeleteMapping(USERS_API + "/{id}")
     ResponseEntity<?> deleteUser(@PathVariable @Min(1) Long id){
         return userService.deleteUser(id);
+    }
+
+    @PostMapping(REGISTER_PATH)
+    User registerUser(@Valid @RequestBody User user){
+        return facadeUser.registerUser(user);
     }
 
 }
