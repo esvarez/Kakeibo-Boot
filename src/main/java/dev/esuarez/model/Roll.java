@@ -29,6 +29,10 @@ public class Roll extends AuditModel{
 
     private String description;
 
+    @ManyToMany(mappedBy = "rolls")
+    @JsonIgnore
+    private Set<User> users;
+/*
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                 CascadeType.PERSIST,
@@ -36,5 +40,6 @@ public class Roll extends AuditModel{
             },
             mappedBy = "rolls" )
     private Set<User> users = new HashSet<>();
+    */
 
 }

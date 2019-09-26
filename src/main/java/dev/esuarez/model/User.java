@@ -1,5 +1,6 @@
 package dev.esuarez.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,17 +37,20 @@ public class User extends AuditModel {
     @NotNull(message = "You should provide a password.")
     @Size(max = 250)
     private String password;
-
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            })
+/*
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "roll_id") }
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "roll_id", referencedColumnName = "id")
     )
-    private Set<Roll> rolls = new HashSet<>();
+ */
+    //@JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "users_roll",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roll_id"))
+    private Set<Roll> rolls;
 
     private boolean active;
 }

@@ -6,7 +6,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Configuration
 public class Configdb {
@@ -24,7 +26,13 @@ public class Configdb {
             rollService.createRoll(roll);
             rollService.createRoll(roll2);
 
+            User user = User.builder().id(1L).email("email@mail.com").password("Password").user("user").build();
 
+            Set<Roll> rolls = new HashSet<>();
+            rolls.add(roll);
+
+            user.setRolls(rolls);
+            userService.createUser(user);
 /*
             User user = User.builder().id(1L).email("email@mail.com").password("Password").user("user").build();
             userService.createUser(user);

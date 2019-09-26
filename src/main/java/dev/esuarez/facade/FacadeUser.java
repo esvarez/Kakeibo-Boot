@@ -7,7 +7,10 @@ import dev.esuarez.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class FacadeUser {
@@ -25,19 +28,22 @@ public class FacadeUser {
         if (optionalRoll.isPresent()){
             Roll roll = optionalRoll.get();
 
-            user.getRolls().add(roll);
+            Set<Roll> rolls = new HashSet<>();
+            rolls.add(roll);
+
+            user.setRolls(rolls);
+
+            //user.getRolls().add(roll);
+
+            System.out.println(user);
             roll.getUsers().add(user);
 
+            user.setActive(true);
+
             System.out.println(roll);
+            System.out.println(user);
 
-
-            userRepository.save(user);
-
-            //rollRepository.save(roll);
-
-
-
-            return null;
+            return userRepository.save(user);
         }else {
             return null;
         }
