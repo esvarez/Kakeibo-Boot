@@ -30,7 +30,6 @@ public class MovementCategoryService {
     }
 
     public MovementCategory createMovementCategory (Long userId, MovementCategory movementCategory){
-        System.out.println(movementCategory);
 
         return userRepository.findById(userId)
                 .map( user -> {

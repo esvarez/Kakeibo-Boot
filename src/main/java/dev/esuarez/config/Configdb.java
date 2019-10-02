@@ -26,15 +26,11 @@ public class Configdb {
             rollService.createRoll(roll);
             rollService.createRoll(roll2);
 
-            User user = User.builder().id(1L).email("email@mail.com").password("Password").user("user").build();
-
             Set<Roll> rolls = new HashSet<>();
             rolls.add(roll);
 
-            user.setRolls(rolls);
-            userService.createUser(user);
-/*
-            User user = User.builder().id(1L).email("email@mail.com").password("Password").user("user").build();
+            User user = User.builder().id(1L).email("email@mail.com").password("Password").user("user").rolls(rolls).build();
+
             userService.createUser(user);
 
             AccountType accountType = AccountType.builder().id(1L).name("savings").build();
@@ -43,7 +39,7 @@ public class Configdb {
             MovementCategory movementCategory = MovementCategory.builder()
                     .id(1L).name("Food")
                     .category("Expense")
-                    .image("Valid url")
+                    .imageURL("Valid url")
                     .user(user).build();
             movementCategoryService.createMovementCategory(user.getId(), movementCategory);
 
@@ -52,6 +48,9 @@ public class Configdb {
             Account account2 = Account.builder().id(2L).name("Credit Bank").user(user).accountType(accountType).build();
             accountService.createAccount(user.getId(), account);
             accountService.createAccount(user.getId(), account2);
+/*
+            User user = User.builder().id(1L).email("email@mail.com").password("Password").user("user").build();
+            userService.createUser(user);
 */
             System.out.println("... Saved");
         };

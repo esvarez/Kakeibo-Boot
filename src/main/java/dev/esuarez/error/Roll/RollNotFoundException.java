@@ -4,4 +4,7 @@ public class RollNotFoundException extends RuntimeException {
     public RollNotFoundException(Integer id) {
         super("Roll id not found: " + id);
     }
+    public RollNotFoundException(String name) {
+        super("Roll " + name + " not found.");
+    }
 }

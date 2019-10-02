@@ -1,5 +1,6 @@
 package dev.esuarez.facade;
 
+import dev.esuarez.error.Roll.RollNotFoundException;
 import dev.esuarez.model.Roll;
 import dev.esuarez.model.User;
 import dev.esuarez.repository.RollRepository;
@@ -22,30 +23,19 @@ public class FacadeUser {
     private RollRepository rollRepository;
 
     public User registerUser(User user){
+        String rollName = "User";
 
-        Optional<Roll> optionalRoll = rollRepository.findByName("User");
+        user.setActive(true);
+        Optional<Roll> optionalRoll = rollRepository.findByName(rollName);
+
+        optionalRoll.ifPresent(roll -> {
+            user.getRolls().add(roll);
+        });
 
         if (optionalRoll.isPresent()){
-            Roll roll = optionalRoll.get();
-
-            Set<Roll> rolls = new HashSet<>();
-            rolls.add(roll);
-
-            user.setRolls(rolls);
-
-            //user.getRolls().add(roll);
-
-            System.out.println(user);
-            roll.getUsers().add(user);
-
-            user.setActive(true);
-
-            System.out.println(roll);
-            System.out.println(user);
-
             return userRepository.save(user);
-        }else {
-            return null;
         }
+        return null;
+
     }
 }

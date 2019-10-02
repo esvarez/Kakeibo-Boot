@@ -28,11 +28,10 @@ public class Roll extends AuditModel{
     private String name;
 
     private String description;
-
-    @ManyToMany(mappedBy = "rolls")
-    @JsonIgnore
-    private Set<User> users;
 /*
+    @ManyToMany(mappedBy = "rolls")
+    private Set<User> users;
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                 CascadeType.PERSIST,

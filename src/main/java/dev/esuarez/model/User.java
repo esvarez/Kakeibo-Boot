@@ -43,14 +43,14 @@ public class User extends AuditModel {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "roll_id", referencedColumnName = "id")
     )
+        @JsonIgnore
  */
-    //@JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "users_roll",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "roll_id"))
-    private Set<Roll> rolls;
+
+    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinTable(name = "user_roll",
+            joinColumns = {@JoinColumn(name="user_id", referencedColumnName="id")},
+            inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="id")} )
+    private Set<Roll> rolls = new HashSet<>();
 
     private boolean active;
 }
