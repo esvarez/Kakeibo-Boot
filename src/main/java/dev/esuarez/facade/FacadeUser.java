@@ -5,13 +5,9 @@ import dev.esuarez.model.Roll;
 import dev.esuarez.model.User;
 import dev.esuarez.repository.RollRepository;
 import dev.esuarez.repository.UserRepository;
+import dev.esuarez.utils.Encryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class FacadeUser {
@@ -24,18 +20,15 @@ public class FacadeUser {
 
     public User registerUser(User user){
         String rollName = "User";
+        Encryptor encryptor = Encryptor.getEncryptorInstance();
+
+        Roll roll = rollRepository.findByName(rollName)
+                .orElseThrow( () -> new RollNotFoundException(rollName));
 
         user.setActive(true);
-        Optional<Roll> optionalRoll = rollRepository.findByName(rollName);
+        user.getRolls().add(roll);
+        user.setPassword(encryptor.encrypt(user.getPassword()));
 
-        optionalRoll.ifPresent(roll -> {
-            user.getRolls().add(roll);
-        });
-
-        if (optionalRoll.isPresent()){
-            return userRepository.save(user);
-        }
-        return null;
-
+        return userRepository.save(user);
     }
 }
