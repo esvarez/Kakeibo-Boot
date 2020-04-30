@@ -64,7 +64,6 @@ public class CategoryRepositoryTest {
             assertThat(categoryUpdated.getName(), not(name));
             assertThat(categoryUpdated.getName(), is("New value"));
             assertThat(categoryUpdated.getUpdatedAt(), not(date));
-            //assertThat(categoryUpdated.getCreatedAt(), is(date));
         }
     }
 
@@ -96,15 +95,13 @@ public class CategoryRepositoryTest {
     class DeleteCategory {
 
         @Test
-        public void delete_categoryExist_success() {
+        public void delete_categoryExist_throwException() {
             val maybeCategory = categoryRepository.findById(1L);
             assertThat(maybeCategory.isPresent(), is(true));
             val category = maybeCategory.get();
 
-            categoryRepository.delete(category);
-
-            val categoryDeleted = categoryRepository.findById(1L);
-            assertThat(categoryDeleted.isPresent(), is(false));
+            assertThrows(DataIntegrityViolationException.class,
+                    () -> categoryRepository.delete(category));
         }
 
         @Test

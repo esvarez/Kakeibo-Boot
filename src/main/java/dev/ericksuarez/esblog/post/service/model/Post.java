@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +35,7 @@ public class Post extends AuditModel{
     @Column(name = "user_id", nullable = false)
     private String user;
 
-    @NotNull(message = "Title is requiered")
+    @NotNull(message = "Title is required")
     private String title;
 
     @NotNull(message = "Content is required")
