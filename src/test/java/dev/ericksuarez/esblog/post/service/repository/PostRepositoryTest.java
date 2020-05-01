@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
 
 import javax.validation.ConstraintViolationException;
 
@@ -103,6 +104,13 @@ public class PostRepositoryTest {
         }
 
         @Test
+        public void findAll_paginationByThree_returnList() {
+            val postPagination = postRepository.findAll(PageRequest.of(0, 3));
+
+            assertThat(postPagination.getContent(), hasSize(3));
+        }
+
+        @Test
         public void findById_postNotExist_returnEmpty() {
             val maybePost = postRepository.findById(404L);
 
@@ -121,6 +129,30 @@ public class PostRepositoryTest {
             val posts = postRepository.findByCategoryId(2L);
 
             assertThat(posts, hasSize(2));
+        }
+    }
+
+    @Nested
+    @DisplayName("Test delete post")
+    class DeletePost {
+
+        @Test
+        public void delete_postExist_success() {
+            val maybePost = postRepository.findById(4L);
+            assertTrue(maybePost.isPresent());
+            val post = maybePost.get();
+
+            postRepository.delete(post);
+
+            val postDeleted = postRepository.findById(4L);
+            assertFalse(postDeleted.isPresent());
+        }
+
+        @Test
+        public void delete_postNotExist_success() {
+            val post = Post.builder().build();
+
+            postRepository.delete(post);
         }
     }
 }

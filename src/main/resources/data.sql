@@ -9,3 +9,5 @@ INSERT INTO posts(ID, CATEGORY_ID, USER_ID, TITLE, CONTENT, URL, CREATED_AT, UPD
 VALUES (3, 2, 'other-id','nuevo titulo', 'Contenido', 'nuevo-titulo', '2020-04-28', '2020-04-28');
 INSERT INTO posts(ID, CATEGORY_ID, USER_ID, TITLE, CONTENT, URL, CREATED_AT, UPDATED_AT)
 VALUES (4, 1, 'other-id','nuevo titulo mas', 'Contenido', 'nuevo-titulo-mas', '2020-04-28', '2020-04-28');
+INSERT INTO posts(ID, CATEGORY_ID, USER_ID, TITLE, CONTENT, URL, CREATED_AT, UPDATED_AT)
+VALUES (5, 1, 'other-id','nuevo titulo mas', 'Contenido', 'nuevo-titulo-mas2', '2020-04-28', '2020-04-28');
