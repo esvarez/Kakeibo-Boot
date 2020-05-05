@@ -43,4 +43,7 @@ public class Post extends AuditModel{
 
     @Column(unique = true)
     private String url;
+
+    @Column(name = "active", columnDefinition = "boolean default true")
+    private boolean active;
 }

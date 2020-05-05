@@ -67,6 +67,17 @@ public class PostRepositoryTest {
         }
 
         @Test
+        public void save_postWithNotNull_ThrowException() {
+            val post = Post.builder()
+                    .title("unique title")
+                    .content("New content")
+                    .build();
+
+            assertThrows(DataIntegrityViolationException.class,
+                    () -> postRepository.save(post));
+        }
+
+        @Test
         public void save_postUrlDuplicated_throw() {
             val category = Category.builder().id(1L).build();
 
@@ -119,16 +130,16 @@ public class PostRepositoryTest {
 
         @Test
         public void findByUser_userExist_returnPostList() {
-            val posts = postRepository.findByUser("user-random");
+            val posts = postRepository.findByUser("user-random", PageRequest.of(0, 3));
 
-            assertThat(posts, hasSize(2));
+            assertThat(posts.getContent(), hasSize(2));
         }
 
         @Test
         public void findByCategoryId_findByCategoryId_returnPostList() {
-            val posts = postRepository.findByCategoryId(2L);
+            val posts = postRepository.findByCategoryId(2L, PageRequest.of(0, 3));
 
-            assertThat(posts, hasSize(2));
+            assertThat(posts.getContent(), hasSize(2));
         }
     }
 
