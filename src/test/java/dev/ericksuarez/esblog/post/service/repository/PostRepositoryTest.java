@@ -115,8 +115,23 @@ public class PostRepositoryTest {
         }
 
         @Test
-        public void findAll_paginationByThree_returnList() {
-            val postPagination = postRepository.findAll(PageRequest.of(0, 3));
+        public void findByUrlAndActive_postExist_returnPost() {
+            val maybePost = postRepository.findByUrlAndActive("titulo-con-espacios", true);
+
+            assertTrue(maybePost.isPresent());
+
+            val post = maybePost.get();
+            assertThat(post, allOf(
+                    hasProperty("user", is("user-random")),
+                    hasProperty("title", is("Titulo con espacios")),
+                    hasProperty("content", is("Contenido")),
+                    hasProperty("url", is("titulo-con-espacios"))
+            ));
+        }
+
+        @Test
+        public void findAllByActive_paginationByThree_returnList() {
+            val postPagination = postRepository.findAllByActive(true, PageRequest.of(0, 3));
 
             assertThat(postPagination.getContent(), hasSize(3));
         }
@@ -130,16 +145,20 @@ public class PostRepositoryTest {
 
         @Test
         public void findByUser_userExist_returnPostList() {
-            val posts = postRepository.findByUser("user-random", PageRequest.of(0, 3));
+            val posts = postRepository.findByUserAndActive("user-random", true, PageRequest.of(0, 3));
 
-            assertThat(posts.getContent(), hasSize(2));
+            assertThat(posts.getContent(), hasSize(1));
+            posts.get()
+                    .forEach(post -> assertThat(post.getUser(), is("user-random")));
         }
 
         @Test
         public void findByCategoryId_findByCategoryId_returnPostList() {
-            val posts = postRepository.findByCategoryId(2L, PageRequest.of(0, 3));
+            val posts = postRepository.findByCategoryIdAndActive(2L, true, PageRequest.of(0, 3));
 
-            assertThat(posts.getContent(), hasSize(2));
+            assertThat(posts.getContent(), hasSize(1));
+            posts.get()
+                    .forEach(post -> assertThat(post.getCategory().getId(), is(2L)));
         }
     }
 

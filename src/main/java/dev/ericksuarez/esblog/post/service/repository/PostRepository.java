@@ -5,8 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
-    Page<Post> findByCategoryId(Long categoryId, Pageable pageable);
+import java.util.Optional;
 
-    Page<Post> findByUser(String userId, Pageable pageable);
+public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
+    Optional<Post> findByUrlAndActive(String url, boolean active);
+
+    Page<Post> findAllByActive(boolean active, Pageable pageable);
+
+    Page<Post> findByCategoryIdAndActive(Long categoryId, boolean active, Pageable pageable);
+
+    Page<Post> findByUserAndActive(String userId, boolean active, Pageable pageable);
 }
