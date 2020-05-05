@@ -1,5 +1,6 @@
 package dev.ericksuarez.esblog.post.service.service;
 
+import dev.ericksuarez.esblog.post.service.error.CategoryNotFoundException;
 import dev.ericksuarez.esblog.post.service.model.Category;
 import dev.ericksuarez.esblog.post.service.repository.CategoryRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class CategoryService {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> {
                     log.error("event=categoryNotExist categoryId={}", categoryId);
-                    return new RuntimeException("Category not exist");
+                    return new CategoryNotFoundException(categoryId);
                 });
         log.info("event=categoryGot category={}", category);
         return category;
