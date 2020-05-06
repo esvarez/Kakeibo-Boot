@@ -1,5 +1,6 @@
 package dev.ericksuarez.esblog.post.service.service;
 
+import dev.ericksuarez.esblog.post.service.error.CategoryNotFoundException;
 import dev.ericksuarez.esblog.post.service.model.Category;
 import dev.ericksuarez.esblog.post.service.repository.CategoryRepository;
 import lombok.val;
@@ -107,10 +108,10 @@ public class CategoryServiceTest {
             when(categoryRepository.findById(anyLong()))
                     .thenReturn(Optional.empty());
 
-            val exception = assertThrows(RuntimeException.class,
+            val exception = assertThrows(CategoryNotFoundException.class,
                     () -> categoryService.getCategoryById(99L));
 
-            assertTrue(exception.getMessage().contains("Category not exist"));
+            assertTrue(exception.getMessage().matches("Category id .*. not found.*"));
         }
     }
 
@@ -133,10 +134,10 @@ public class CategoryServiceTest {
             when(categoryRepository.findById(anyLong()))
                     .thenReturn(Optional.empty());
 
-            val exception = assertThrows(RuntimeException.class,
+            val exception = assertThrows(CategoryNotFoundException.class,
                     () -> categoryService.deleteCategory(99L));
 
-            assertTrue(exception.getMessage().contains("Category not exist"));
+            assertTrue(exception.getMessage().matches("Category id .*. not found.*"));
         }
     }
 }

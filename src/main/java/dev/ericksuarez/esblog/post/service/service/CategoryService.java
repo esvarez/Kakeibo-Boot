@@ -46,6 +46,12 @@ public class CategoryService {
         return category;
     }
 
+    public Category updateCategory(Long categoryId, Category category) {
+        log.info("event=updateCategoryInvoked categoryId={} category={}", categoryId ,category);
+        category.setId(categoryId);
+        return saveCategory(category);
+    }
+
     public ResponseEntity<?> deleteCategory(Long categoryId) {
         var category = getCategoryById(categoryId);
         categoryRepository.delete(category);

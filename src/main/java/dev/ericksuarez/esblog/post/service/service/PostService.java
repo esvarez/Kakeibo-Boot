@@ -1,5 +1,6 @@
 package dev.ericksuarez.esblog.post.service.service;
 
+import dev.ericksuarez.esblog.post.service.error.PostNotFoundException;
 import dev.ericksuarez.esblog.post.service.model.Post;
 import dev.ericksuarez.esblog.post.service.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class PostService {
     public Post getPostById(Long postId) {
         log.info("event=getPostByIdInvoked postId={}", postId);
         var post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post Not Exist"));
+                .orElseThrow(() -> new PostNotFoundException(postId));
         log.info("event=getPostByIdInvoked postId={}", post);
         return post;
     }
@@ -44,7 +45,7 @@ public class PostService {
     public Post getPostByUrl(String url) {
         log.info("event=getPostByUrlInvoked url={}", url);
         var post = postRepository.findByUrlAndActive(url, true)
-                .orElseThrow(() -> new RuntimeException("Post Not Exist"));
+                .orElseThrow(() -> new PostNotFoundException(url));
         log.info("event=postGotByUrl post={}", post);
         return post;
     }
@@ -71,6 +72,12 @@ public class PostService {
         return postSaved;
     }
 
+    public Post updatePost(Long postId, Post post) {
+        log.info("event=updatePostInvoked postId={} post={}", postId, post);
+        post.setId(postId);
+        return savePost(post);
+    }
+
     public ResponseEntity<?> deletePost(Long postId) {
         log.info("event=deletePostInvoked");
         return postRepository.findById(postId)
@@ -80,7 +87,7 @@ public class PostService {
                     postRepository.save(post);
                     return ResponseEntity.ok().build();
                 })
-                .orElseThrow(() -> new RuntimeException("PostNotExist"));
+                .orElseThrow(() -> new PostNotFoundException(postId));
     }
 
     private Post createUrl(Post post) {

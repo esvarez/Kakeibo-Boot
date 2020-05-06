@@ -1,5 +1,6 @@
 package dev.ericksuarez.esblog.post.service.service;
 
+import dev.ericksuarez.esblog.post.service.error.PostNotFoundException;
 import dev.ericksuarez.esblog.post.service.model.Post;
 import dev.ericksuarez.esblog.post.service.repository.PostRepository;
 import lombok.val;
@@ -78,7 +79,7 @@ public class PostServiceTest {
             when(postRepository.findById(anyLong()))
                     .thenReturn(Optional.empty());
 
-            val exception = assertThrows(RuntimeException.class,
+            val exception = assertThrows(PostNotFoundException.class,
                     () -> postService.getPostById(99L));
 
             assertThat(exception.getMessage().contains("Category not exist"));
@@ -192,7 +193,7 @@ public class PostServiceTest {
             when(postRepository.findById(anyLong()))
                     .thenReturn(Optional.empty());
 
-            val exception = assertThrows(RuntimeException.class,
+            val exception = assertThrows(PostNotFoundException.class,
                     () -> postService.deletePost(99L));
 
             assertThat(exception.getMessage().contains("Category not exist"));
