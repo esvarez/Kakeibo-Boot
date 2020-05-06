@@ -23,7 +23,7 @@ public class CategoryService {
 
     public List<Category> findAllCategories() {
         log.info("event=findAllCategoriesInvoked");
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAllByOrderByNameAsc();
         log.info("event=findAllCategoriesInvoked categories={}", categories);
         return categories;
     }

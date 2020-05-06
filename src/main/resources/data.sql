@@ -1,5 +1,6 @@
 INSERT INTO categories(ID, NAME, CREATED_AT, UPDATED_AT) VALUES (1, 'Java', '2020-04-28', '2020-04-28');
 INSERT INTO categories(ID, NAME, CREATED_AT, UPDATED_AT) VALUES (2, 'Tech', '2020-04-28', '2020-04-28');
+INSERT INTO categories(ID, NAME, CREATED_AT, UPDATED_AT) VALUES (3, 'New', '2020-04-28', '2020-04-28');
 
 INSERT INTO posts(ID, CATEGORY_ID, USER_ID, TITLE, CONTENT, URL, ACTIVE, CREATED_AT, UPDATED_AT)
 VALUES (1, 1, 'user-random','Titulo con espacios', 'Contenido', 'titulo-con-espacios', true, '2020-04-28', '2020-04-28');
