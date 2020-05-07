@@ -81,7 +81,7 @@ public class CategoryServiceTest {
 
         @Test
         public void findAllCategories_returnListCategories() {
-            when(categoryRepository.findAll())
+            when(categoryRepository.findAllByOrderByNameAsc())
                     .thenReturn(Arrays.asList(
                             Category.builder().build(),
                             Category.builder().build(),

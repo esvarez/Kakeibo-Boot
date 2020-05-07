@@ -93,6 +93,7 @@ public class PostService {
     private Post createUrl(Post post) {
         return post.toBuilder()
                 .url(post.getTitle().toLowerCase().trim().replaceAll("\\s", "-"))
+                .active(true)
                 .build();
     }
 

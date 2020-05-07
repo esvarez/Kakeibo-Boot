@@ -2,6 +2,7 @@ package dev.ericksuarez.esblog.post.service.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.ericksuarez.esblog.post.service.model.Category;
+import lombok.val;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static dev.ericksuarez.esblog.post.service.config.UriConfig.CATEGORIES;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
@@ -39,9 +42,9 @@ public class CategoryControllerTest {
 
         @Test
         void saveCategory_categoryOk_returnNewCategory() throws Exception {
-            var category = Category.builder().name("Framework").build();
+            val category = Category.builder().name("Framework").build();
 
-            mockMvc.perform(post("/categories")
+            mockMvc.perform(post(CATEGORIES)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(category)))
                     .andExpect(status().isCreated())
@@ -51,9 +54,9 @@ public class CategoryControllerTest {
 
         @Test
         void saveCategory_categoryEmpty_throwError() throws Exception {
-            var category = Category.builder().build();
+            val category = Category.builder().build();
 
-            mockMvc.perform(post("/categories")
+            mockMvc.perform(post(CATEGORIES)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(category)))
                     .andExpect(status().isBadRequest())
@@ -70,9 +73,9 @@ public class CategoryControllerTest {
 
         @Test
         public void getCategoryById_idExist_returnCategory() throws Exception {
-            var id = 1;
+            val id = 1;
 
-            mockMvc.perform(get("/categories/" + id)
+            mockMvc.perform(get(CATEGORIES + "/" + id)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id", is(id)))
@@ -82,9 +85,9 @@ public class CategoryControllerTest {
 
         @Test
         public void getCategoryById_idNotExist_returnError() throws Exception {
-            var id = 404;
+            val id = 404;
 
-            mockMvc.perform(get("/categories/" + id)
+            mockMvc.perform(get(CATEGORIES + "/" + id)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.status", is(404)))
@@ -94,7 +97,7 @@ public class CategoryControllerTest {
 
         @Test
         void getAllCategories_categoriesExist_returnCategoriesList() throws Exception {
-            mockMvc.perform(get("/categories")
+            mockMvc.perform(get(CATEGORIES)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(2)))
@@ -109,10 +112,10 @@ public class CategoryControllerTest {
 
         @Test
         void updateCategory_categoryOk_returnCategory() throws Exception {
-            var id = 2;
-            var category = Category.builder().name("Education").build();
+            val id = 2;
+            val category = Category.builder().name("Education").build();
 
-            mockMvc.perform(put("/categories/" + id)
+            mockMvc.perform(put(CATEGORIES + "/" + id)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(category)))
                     .andExpect(status().isOk())
@@ -128,9 +131,9 @@ public class CategoryControllerTest {
 
         @Test
         void deleteCategory_categoryExist_returnCategory() throws Exception {
-            var id = 3;
+            val id = 3;
 
-            mockMvc.perform(delete("/categories/" + id)
+            mockMvc.perform(delete(CATEGORIES + "/" + id)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(print());
@@ -138,9 +141,9 @@ public class CategoryControllerTest {
 
         @Test
         void deleteCategory_categoryNotExist_returnCategory() throws Exception {
-            var id = 40;
+            val id = 40;
 
-            mockMvc.perform(delete("/categories/" + id)
+            mockMvc.perform(delete(CATEGORIES + "/" + id)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isNotFound())
                     .andDo(print());

@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
+import static dev.ericksuarez.esblog.post.service.config.UriConfig.CATEGORIES;
+
 @Slf4j
 @RestController
 public class CategoryController {
 
     private CategoryService categoryService;
-
-    private final String CATEGORIES = "categories";
 
     @Autowired
     public CategoryController(CategoryService categoryService) {
