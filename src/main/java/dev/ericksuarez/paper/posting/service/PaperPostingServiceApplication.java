@@ -1,4 +1,4 @@
-package dev.ericksuarez.paperpostingservice;
+package dev.ericksuarez.paper.posting.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
