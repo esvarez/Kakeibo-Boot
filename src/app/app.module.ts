@@ -15,6 +15,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { NewMovementComponent } from './pages/new-movement/new-movement.component';
 import { MovementFormComponent } from './components/movement-form/movement-form.component';
 import { SelectInputComponent } from './shared/components/select-input/select-input.component';
+import { ComboboxComponent } from './shared/components/combobox/combobox.component';
+import {FormsModule} from "@angular/forms";
+import {RouterOutlet} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -27,13 +30,16 @@ import { SelectInputComponent } from './shared/components/select-input/select-in
     IndexComponent,
     NewMovementComponent,
     MovementFormComponent,
-    SelectInputComponent
+    SelectInputComponent,
+    ComboboxComponent
   ],
   imports: [
     BrowserModule,
     NgChartsModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule,
+    RouterOutlet
   ],
   providers: [],
   bootstrap: [AppComponent]

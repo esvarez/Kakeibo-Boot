@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
 
-// const routes: Routes = []
+import {IndexComponent} from "./pages/index/index.component";
+import {NewMovementComponent} from "./pages/new-movement/new-movement.component";
+
+const routes: Routes = [
+  {path: '', component: IndexComponent},
+  {path:'movement', children: [
+      {path: 'create', component: NewMovementComponent},
+    ] }
+]
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
