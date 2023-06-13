@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-const routes: Routes = []
+// const routes: Routes = []
 
 @NgModule({
   declarations: [],

@@ -1,0 +1,60 @@
+<form>
+  <div class="space-y-12">
+    <div class="border-b border-gray-900/10 pb-12">
+      <h2 class="text-base font-semibold leading-7 text-gray-900">Nuevo Gasto</h2>
+      <p class="mt-1 text-sm leading-6 text-gray-600">Recuerda ser especifico para poder saber como usas tu
+        dinero.</p>
+
+      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4">
+        <!--      Money input -->
+        <div>
+          <label for="amount" class="block text-sm font-medium leading-6 text-gray-900">Cantidad</label>
+          <div class="relative mt-2 rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <span class="text-gray-500 sm:text-sm">$</span>
+            </div>
+            <input type="text" name="amount" id="amount"
+                   class="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                   placeholder="0.00" aria-describedby="amount-currency">
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+              <span class="text-gray-500 sm:text-sm" id="amount-currency">MXN</span>
+            </div>
+          </div>
+        </div>
+
+        <!--      TODO: Add datepicker -->
+
+        <app-select-input
+            [label]="movementsLabel"
+            [selectItems]="movementsOptions"
+            [itemSelected]="movementsOptions[0]"></app-select-input>
+
+        <app-select-input
+            [label]="accountsLabel"
+            [selectItems]="accountsOptions"
+            [itemSelected]="accountsOptions[0]"
+        ></app-select-input>
+
+        <!-- TODO: Add condition -->
+        <app-select-input
+            [label]="accountsLabelTransfer"
+            [selectItems]="accountsOptions"
+            [itemSelected]="accountsOptions[0]"
+        ></app-select-input>
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+  <div class="mt-6 flex items-center justify-end gap-x-6">
+    <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+    <button type="submit"
+            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+      Save
+    </button>
+  </div>
+</form>
