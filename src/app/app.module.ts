@@ -18,6 +18,8 @@ import { SelectInputComponent } from './shared/components/select-input/select-in
 import { ComboboxComponent } from './shared/components/combobox/combobox.component';
 import {FormsModule} from "@angular/forms";
 import {RouterOutlet} from "@angular/router";
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { AppPageComponent } from './pages/app-page/app-page.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import {RouterOutlet} from "@angular/router";
     NewMovementComponent,
     MovementFormComponent,
     SelectInputComponent,
-    ComboboxComponent
+    ComboboxComponent,
+    LoginPageComponent,
+    AppPageComponent
   ],
   imports: [
     BrowserModule,
