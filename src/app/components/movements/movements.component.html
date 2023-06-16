@@ -1,0 +1,33 @@
+<ul role="list" class="divide-y divide-gray-100">
+  <div *ngFor="let movement of movements">
+    <div *ngIf="!isSameDate(movement.date)" class="sticky top-0 z-10 border-y border-b-gray-200 border-t-gray-100 bg-gray-50 px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900">
+      <h3>{{movement.date | date:'dd MMMM':'': 'es'}}</h3>
+    </div>
+    <li class="relative flex justify-between gap-x-6 py-2">
+      <div class="flex items-center gap-x-2">
+        <div class="mx-1 text-2xl">
+          {{movement.icon? movement.icon : '💰'}}
+        </div>
+
+        <div class="min-w-0 flex-auto">
+          <p class="text-sm font-semibold leading-6 text-gray-900">
+            {{movement.category}}
+          </p>
+          <p class="flex text-xs leading-5 text-gray-500 ">
+            <a class="relative w-52 truncate">{{movement.description}}</a>
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-x-4 mx-2">
+        <div class="sm:flex sm:flex-col sm:items-end">
+          <div class="mt-1 flex items-center gap-x-1.5">
+            <div class="flex-none rounded-full bg-emerald-500/20 p-1" [ngClass]="{'bg-red-500/20': movement.amount < 0}" >
+              <div class="h-1.5 w-1.5 rounded-full bg-emerald-500" [ngClass]="{'bg-red-500': movement.amount < 0}"></div>
+            </div>
+            <p class="text-xs leading-5 text-gray-500">{{movement.amount | currency}}</p>
+          </div>
+        </div>
+      </div>
+    </li>
+  </div>
+</ul>
