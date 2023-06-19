@@ -27,6 +27,7 @@ import { AccountsComponent } from './pages/accounts/accounts.component';
 import { AccountFormComponent } from './components/account-form/account-form.component';
 import { AccountDetailComponent } from './components/account-detail/account-detail.component';
 import { AccountSummaryComponent } from './components/account-summary/account-summary.component';
+import { DatePickerComponent } from './components/date-picker/date-picker.component';
 
 registerLocaleData(localeEs, 'es');
 
@@ -49,7 +50,8 @@ registerLocaleData(localeEs, 'es');
     AccountsComponent,
     AccountFormComponent,
     AccountDetailComponent,
-    AccountSummaryComponent
+    AccountSummaryComponent,
+    DatePickerComponent
   ],
   imports: [
     BrowserModule,
