@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 
 import {SelectItem} from "../../contracts";
-import {timeout} from "rxjs";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-select-input',
@@ -12,11 +12,15 @@ export class SelectInputComponent {
   @Input() selectItems: SelectItem[] | undefined
   @Input() itemSelected: SelectItem
   @Input() label: string | undefined
+  @Input() id: string | undefined
+  @Input() name: string | undefined
   isSelectOpen: boolean
   highlightedIndex: number | null
   isHidden: boolean
 
   constructor() {
+    console.log(this.id)
+    console.log(this.name)
     this.itemSelected = {id: 0, name: ''}
     this.isSelectOpen = false
     this.highlightedIndex = null

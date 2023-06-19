@@ -1,3 +1,4 @@
-import {SelectItem} from "./index";
-
-export {SelectItem}
+export interface SelectItem {
+  id: number;
+  name: string;
+}

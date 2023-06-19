@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterOutlet} from "@angular/router";
 import localeEs from '@angular/common/locales/es';
 
@@ -22,6 +22,11 @@ import { SelectInputComponent } from './shared/components/select-input/select-in
 import { ComboboxComponent } from './shared/components/combobox/combobox.component';
 import { LoginPage } from './pages/login-page/login.page';
 import { AppPage } from './pages/app-page/app.page';
+import { EditMovementComponent } from './pages/edit-movement/edit-movement.component';
+import { AccountsComponent } from './pages/accounts/accounts.component';
+import { AccountFormComponent } from './components/account-form/account-form.component';
+import { AccountDetailComponent } from './components/account-detail/account-detail.component';
+import { AccountSummaryComponent } from './components/account-summary/account-summary.component';
 
 registerLocaleData(localeEs, 'es');
 
@@ -39,7 +44,12 @@ registerLocaleData(localeEs, 'es');
     SelectInputComponent,
     ComboboxComponent,
     LoginPage,
-    AppPage
+    AppPage,
+    EditMovementComponent,
+    AccountsComponent,
+    AccountFormComponent,
+    AccountDetailComponent,
+    AccountSummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +57,8 @@ registerLocaleData(localeEs, 'es');
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    RouterOutlet
+    RouterOutlet,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
