@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {SelectItem} from "../../shared/contracts";
-import {Movement} from "../../shared/contracts";
+import {Movement, MovementTypes, SelectItem} from "../../shared/contracts";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -11,6 +10,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class MovementFormComponent {
   @Input() movement: Movement | undefined
+  isDateFocused: boolean = false
 
   movementForm = new FormGroup({
     amount: new FormControl('',[
@@ -49,9 +49,9 @@ export class MovementFormComponent {
 
   movementsLabel: string = 'Tipo de movimiento'
   movementsOptions: SelectItem[] = [
-    {id: 1, name: 'Gasto'},
-    {id: 2, name: 'Ingreso'},
-    {id: 3, name: 'Transferencia'}
+    {id: MovementTypes.Expense, name: 'Gasto'},
+    {id: MovementTypes.Income, name: 'Ingreso'},
+    {id: MovementTypes.Transfer, name: 'Transferencia'}
   ]
 
   accountsLabel: string = 'Cuenta'
@@ -65,6 +65,13 @@ export class MovementFormComponent {
   onSubmit() {
     this.movementForm.markAllAsTouched()
     console.log(this.movementForm.value)
+  }
+
+  onDateFocus() {
+    this.isDateFocused = true
+  }
+  onDateBlur() {
+    this.isDateFocused = false
   }
 
 }

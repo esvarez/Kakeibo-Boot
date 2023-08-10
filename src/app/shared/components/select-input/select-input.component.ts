@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 
 import {SelectItem} from "../../contracts";
-import {FormGroup} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-select-input',
@@ -9,6 +9,7 @@ import {FormGroup} from "@angular/forms";
   styleUrls: ['./select-input.component.css']
 })
 export class SelectInputComponent {
+  @Input() formGroup: FormGroup | null
   @Input() selectItems: SelectItem[] | undefined
   @Input() itemSelected: SelectItem
   @Input() label: string | undefined
@@ -19,8 +20,7 @@ export class SelectInputComponent {
   isHidden: boolean
 
   constructor() {
-    console.log(this.id)
-    console.log(this.name)
+    this.formGroup = new FormGroup({})
     this.itemSelected = {id: 0, name: ''}
     this.isSelectOpen = false
     this.highlightedIndex = null
